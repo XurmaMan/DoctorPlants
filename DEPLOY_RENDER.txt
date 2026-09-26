@@ -1,0 +1,11 @@
+Публикация на Render
+
+GitHub: загрузите содержимое этой папки в корень нового репозитория.
+
+Render:
+Build Command: pip install -r requirements.txt
+Start Command: gunicorn app:app
+
+После успешного Deploy Render выдаст публичную HTTPS-ссылку.
+Python на компьютере посетителя не нужен.
+run_web.bat предназначен только для локального запуска Windows.
