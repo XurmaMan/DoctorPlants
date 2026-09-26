@@ -1,206 +1,439 @@
 {
-  "questions": [
-    {
-      "id": "soil",
+  "start": "main_symptom",
+  "questions": {
+    "main_symptom": {
+      "text": "Что больше всего беспокоит в состоянии растения?",
+      "options": {
+        "yellow": {
+          "label": "Листья желтеют",
+          "next": "yellow_soil"
+        },
+        "wilt": {
+          "label": "Листья вялые / растение увядает",
+          "next": "wilt_soil"
+        },
+        "dry": {
+          "label": "Листья или кончики сохнут",
+          "next": "dry_soil"
+        },
+        "spots": {
+          "label": "На листьях появились пятна",
+          "next": "spot_type"
+        },
+        "pests": {
+          "label": "Есть признаки вредителей",
+          "next": "web"
+        },
+        "pale": {
+          "label": "Листья стали бледными",
+          "next": "pale_light"
+        },
+        "falling": {
+          "label": "Листья опадают",
+          "next": "fall_soil"
+        },
+        "normal": {
+          "label": "Явных повреждений нет, хочу проверить условия",
+          "next": "normal_check"
+        }
+      }
+    },
+    "yellow_soil": {
       "text": "Каково состояние почвы?",
       "options": {
-        "dry": "Сухая",
-        "normal": "Умеренно влажная",
-        "wet": "Длительно влажная"
+        "wet": {
+          "label": "Долго остаётся влажной",
+          "next": "yellow_wilt"
+        },
+        "dry": {
+          "label": "Сухая",
+          "next": "yellow_dry"
+        },
+        "normal": {
+          "label": "Умеренно влажная",
+          "next": "yellow_feed"
+        }
       }
     },
-    {
-      "id": "leaf_color",
-      "text": "Как изменился цвет листьев?",
+    "yellow_wilt": {
+      "text": "Листья одновременно стали вялыми?",
       "options": {
-        "normal": "Без изменений",
-        "yellow": "Желтеют",
-        "pale": "Бледные"
+        "yes": {
+          "label": "Да",
+          "result": "overwatering",
+          "confidence": 96,
+          "rule": "R1"
+        },
+        "no": {
+          "label": "Нет",
+          "result": "overwatering",
+          "confidence": 82,
+          "rule": "R2"
+        }
       }
     },
-    {
-      "id": "leaf_state",
-      "text": "Каково состояние листьев?",
+    "yellow_dry": {
+      "text": "Есть ли сухие кончики или края листьев?",
       "options": {
-        "normal": "Нормальные",
-        "wilted": "Вялые",
-        "dry": "Сухие"
+        "yes": {
+          "label": "Да",
+          "result": "underwatering",
+          "confidence": 88,
+          "rule": "R3"
+        },
+        "no": {
+          "label": "Нет",
+          "next": "yellow_feed"
+        }
       }
     },
-    {
-      "id": "tips",
-      "text": "Состояние кончиков листьев?",
+    "yellow_feed": {
+      "text": "Когда растение получало подкормку в период активного роста?",
       "options": {
-        "normal": "Нормальные",
-        "dry": "Сухие"
+        "long": {
+          "label": "Давно или не получало",
+          "result": "nutrient",
+          "confidence": 78,
+          "rule": "R4"
+        },
+        "regular": {
+          "label": "Подкормка регулярная",
+          "result": "stress",
+          "confidence": 60,
+          "rule": "R5"
+        }
       }
     },
-    {
-      "id": "light",
-      "text": "Какое освещение?",
+    "wilt_soil": {
+      "text": "Какова влажность почвы сейчас?",
       "options": {
-        "low": "Недостаточное",
-        "normal": "Рассеянное",
-        "direct": "Прямое солнце"
+        "dry": {
+          "label": "Почва сухая",
+          "result": "underwatering",
+          "confidence": 94,
+          "rule": "R6"
+        },
+        "wet": {
+          "label": "Почва долго влажная",
+          "next": "wilt_yellow"
+        },
+        "normal": {
+          "label": "Умеренно влажная",
+          "next": "wilt_pests"
+        }
       }
     },
-    {
-      "id": "spots",
-      "text": "Есть ли пятна?",
+    "wilt_yellow": {
+      "text": "Листья желтеют?",
       "options": {
-        "none": "Нет",
-        "light_dry": "Светлые сухие",
-        "dark": "Тёмные/бурые"
+        "yes": {
+          "label": "Да",
+          "result": "overwatering",
+          "confidence": 96,
+          "rule": "R7"
+        },
+        "no": {
+          "label": "Нет",
+          "result": "root_problem",
+          "confidence": 72,
+          "rule": "R8"
+        }
       }
     },
-    {
-      "id": "web",
-      "text": "Есть ли тонкая паутина?",
+    "wilt_pests": {
+      "text": "Есть ли паутина или заметные мелкие насекомые?",
       "options": {
-        "no": "Нет",
-        "yes": "Да"
+        "yes": {
+          "label": "Да",
+          "next": "web"
+        },
+        "no": {
+          "label": "Нет",
+          "result": "stress",
+          "confidence": 62,
+          "rule": "R9"
+        }
       }
     },
-    {
-      "id": "insects",
-      "text": "Есть ли мелкие насекомые?",
+    "dry_soil": {
+      "text": "Почва часто пересыхает между поливами?",
       "options": {
-        "no": "Нет",
-        "yes": "Да"
+        "yes": {
+          "label": "Да",
+          "result": "underwatering",
+          "confidence": 93,
+          "rule": "R10"
+        },
+        "no": {
+          "label": "Нет",
+          "next": "dry_humidity"
+        }
       }
     },
-    {
-      "id": "humidity",
-      "text": "Какова влажность воздуха?",
+    "dry_humidity": {
+      "text": "Воздух рядом с растением сухой (батарея, отопление, кондиционер)?",
       "options": {
-        "low": "Низкая",
-        "normal": "Нормальная"
+        "yes": {
+          "label": "Да",
+          "result": "low_humidity",
+          "confidence": 90,
+          "rule": "R11"
+        },
+        "no": {
+          "label": "Нет",
+          "next": "dry_sun"
+        }
       }
     },
-    {
-      "id": "feeding",
-      "text": "Есть ли регулярная подкормка?",
+    "dry_sun": {
+      "text": "Попадают ли на растение прямые яркие солнечные лучи?",
       "options": {
-        "yes": "Да",
-        "no": "Нет"
+        "yes": {
+          "label": "Да",
+          "result": "sunburn",
+          "confidence": 76,
+          "rule": "R12"
+        },
+        "no": {
+          "label": "Нет",
+          "result": "stress",
+          "confidence": 55,
+          "rule": "R13"
+        }
+      }
+    },
+    "spot_type": {
+      "text": "Какие пятна преобладают?",
+      "options": {
+        "light": {
+          "label": "Светлые, сухие или выгоревшие",
+          "next": "spot_sun"
+        },
+        "dark": {
+          "label": "Тёмные, бурые или мокнущие",
+          "next": "spot_wet"
+        }
+      }
+    },
+    "spot_sun": {
+      "text": "Растение получает прямое яркое солнце?",
+      "options": {
+        "yes": {
+          "label": "Да",
+          "result": "sunburn",
+          "confidence": 95,
+          "rule": "R14"
+        },
+        "no": {
+          "label": "Нет",
+          "result": "stress",
+          "confidence": 58,
+          "rule": "R15"
+        }
+      }
+    },
+    "spot_wet": {
+      "text": "Почва часто остаётся влажной, а воздух плохо циркулирует?",
+      "options": {
+        "yes": {
+          "label": "Да",
+          "result": "fungal",
+          "confidence": 91,
+          "rule": "R16"
+        },
+        "no": {
+          "label": "Нет",
+          "result": "fungal",
+          "confidence": 68,
+          "rule": "R17"
+        }
+      }
+    },
+    "web": {
+      "text": "Есть ли тонкая паутина на листьях, черешках или между ними?",
+      "options": {
+        "yes": {
+          "label": "Да",
+          "result": "spider_mite",
+          "confidence": 98,
+          "rule": "R18"
+        },
+        "no": {
+          "label": "Нет",
+          "next": "visible_insects"
+        }
+      }
+    },
+    "visible_insects": {
+      "text": "Видны ли мелкие насекомые на листьях или стеблях?",
+      "options": {
+        "yes": {
+          "label": "Да",
+          "result": "aphids",
+          "confidence": 94,
+          "rule": "R19"
+        },
+        "no": {
+          "label": "Нет",
+          "result": "pest_unclear",
+          "confidence": 55,
+          "rule": "R20"
+        }
+      }
+    },
+    "pale_light": {
+      "text": "Растению явно не хватает света?",
+      "options": {
+        "yes": {
+          "label": "Да",
+          "result": "low_light",
+          "confidence": 91,
+          "rule": "R21"
+        },
+        "no": {
+          "label": "Нет",
+          "next": "pale_feed"
+        }
+      }
+    },
+    "pale_feed": {
+      "text": "Растение давно не получало подкормку?",
+      "options": {
+        "yes": {
+          "label": "Да",
+          "result": "nutrient",
+          "confidence": 84,
+          "rule": "R22"
+        },
+        "no": {
+          "label": "Нет",
+          "result": "stress",
+          "confidence": 55,
+          "rule": "R23"
+        }
+      }
+    },
+    "fall_soil": {
+      "text": "Каково состояние почвы?",
+      "options": {
+        "wet": {
+          "label": "Долго влажная",
+          "result": "overwatering",
+          "confidence": 80,
+          "rule": "R24"
+        },
+        "dry": {
+          "label": "Часто пересыхает",
+          "result": "underwatering",
+          "confidence": 78,
+          "rule": "R25"
+        },
+        "normal": {
+          "label": "Умеренно влажная",
+          "next": "fall_light"
+        }
+      }
+    },
+    "fall_light": {
+      "text": "Недавно менялись место, освещение или температура?",
+      "options": {
+        "yes": {
+          "label": "Да",
+          "result": "stress",
+          "confidence": 86,
+          "rule": "R26"
+        },
+        "no": {
+          "label": "Нет",
+          "result": "low_light",
+          "confidence": 60,
+          "rule": "R27"
+        }
+      }
+    },
+    "normal_check": {
+      "text": "Почва соответствует обычному режиму полива растения?",
+      "options": {
+        "yes": {
+          "label": "Да",
+          "next": "normal_light"
+        },
+        "no": {
+          "label": "Нет",
+          "next": "wilt_soil"
+        }
+      }
+    },
+    "normal_light": {
+      "text": "Освещение соответствует требованиям растения?",
+      "options": {
+        "yes": {
+          "label": "Да",
+          "result": "normal",
+          "confidence": 88,
+          "rule": "R28"
+        },
+        "no": {
+          "label": "Нет",
+          "result": "low_light",
+          "confidence": 70,
+          "rule": "R29"
+        }
       }
     }
-  ],
+  },
   "diagnoses": {
-    "over": {
+    "overwatering": {
       "name": "Избыточный полив",
-      "recommendation": "Сократите полив, дайте грунту просохнуть и проверьте дренаж."
+      "recommendation": "Сократите полив, дайте верхнему слою грунта просохнуть и проверьте дренаж. При запахе гнили осмотрите корни."
     },
-    "under": {
+    "underwatering": {
       "name": "Недостаточный полив",
-      "recommendation": "Постепенно восстановите нормальный полив."
+      "recommendation": "Постепенно восстановите регулярный полив и убедитесь, что субстрат смачивается равномерно."
     },
-    "light": {
-      "name": "Недостаток освещения",
-      "recommendation": "Переставьте растение в более светлое место."
+    "nutrient": {
+      "name": "Возможный дефицит питания",
+      "recommendation": "Проверьте график подкормок и состояние субстрата. Используйте удобрение для конкретного вида строго по инструкции."
     },
-    "burn": {
-      "name": "Солнечный ожог",
-      "recommendation": "Уберите растение от прямых солнечных лучей."
+    "stress": {
+      "name": "Стресс растения / изменение условий",
+      "recommendation": "Стабилизируйте освещение, полив и температуру. Наблюдайте прежде всего за состоянием новых листьев."
     },
-    "humid": {
+    "root_problem": {
+      "name": "Возможная проблема корневой системы",
+      "recommendation": "Проверьте дренаж, запах грунта и состояние корней. Не увеличивайте полив до выяснения причины."
+    },
+    "low_humidity": {
       "name": "Низкая влажность воздуха",
-      "recommendation": "Увеличьте влажность воздуха подходящим способом."
+      "recommendation": "Повышайте влажность подходящим для вида способом и уберите растение от горячего или холодного воздушного потока."
     },
-    "mite": {
-      "name": "Признаки паутинного клеща",
-      "recommendation": "Изолируйте растение и проведите подходящую обработку по инструкции."
-    },
-    "aphid": {
-      "name": "Признаки поражения тлёй",
-      "recommendation": "Изолируйте растение и проведите обработку разрешённым средством."
+    "sunburn": {
+      "name": "Солнечный ожог",
+      "recommendation": "Защитите растение от жёстких прямых лучей. Повреждённые участки не восстановятся; оценивайте новые листья."
     },
     "fungal": {
       "name": "Возможное грибковое поражение",
-      "recommendation": "Изолируйте растение и уточните вид поражения перед обработкой."
+      "recommendation": "Изолируйте растение, удалите сильно поражённые части и избегайте переувлажнения. Уточните вид поражения перед обработкой."
+    },
+    "spider_mite": {
+      "name": "Признаки паутинного клеща",
+      "recommendation": "Изолируйте растение, осмотрите нижнюю сторону листьев и проведите обработку средством от клещей по инструкции."
+    },
+    "aphids": {
+      "name": "Признаки тли или другого сосущего вредителя",
+      "recommendation": "Изолируйте растение, удалите заметных вредителей и примените разрешённое средство по инструкции."
+    },
+    "pest_unclear": {
+      "name": "Вредитель не определён однозначно",
+      "recommendation": "Осмотрите нижнюю сторону листьев, точки роста и грунт при хорошем освещении. При возможности сделайте фото вредителя."
+    },
+    "low_light": {
+      "name": "Недостаток освещения",
+      "recommendation": "Переставьте растение в более светлое место с подходящим рассеянным освещением или используйте фитолампу."
+    },
+    "normal": {
+      "name": "Явных признаков проблемы не обнаружено",
+      "recommendation": "Продолжайте обычный уход с учётом требований конкретного вида и наблюдайте за изменениями."
     }
-  },
-  "rules": [
-    {
-      "id": "R1",
-      "diagnosis": "over",
-      "weight": 4,
-      "conditions": {
-        "soil": "wet",
-        "leaf_color": "yellow",
-        "leaf_state": "wilted"
-      },
-      "explanation": "Влажная почва, пожелтение и увядание соответствуют переувлажнению."
-    },
-    {
-      "id": "R2",
-      "diagnosis": "under",
-      "weight": 4,
-      "conditions": {
-        "soil": "dry",
-        "leaf_state": "wilted",
-        "tips": "dry"
-      },
-      "explanation": "Сухая почва, увядание и сухие кончики указывают на нехватку воды."
-    },
-    {
-      "id": "R3",
-      "diagnosis": "light",
-      "weight": 3,
-      "conditions": {
-        "light": "low",
-        "leaf_color": "pale"
-      },
-      "explanation": "Бледные листья при слабом освещении указывают на нехватку света."
-    },
-    {
-      "id": "R4",
-      "diagnosis": "burn",
-      "weight": 4,
-      "conditions": {
-        "light": "direct",
-        "spots": "light_dry"
-      },
-      "explanation": "Сухие светлые пятна при прямом солнце характерны для ожога."
-    },
-    {
-      "id": "R5",
-      "diagnosis": "humid",
-      "weight": 3,
-      "conditions": {
-        "humidity": "low",
-        "tips": "dry"
-      },
-      "explanation": "Сухой воздух и сухие кончики соответствуют низкой влажности."
-    },
-    {
-      "id": "R6",
-      "diagnosis": "mite",
-      "weight": 5,
-      "conditions": {
-        "web": "yes"
-      },
-      "explanation": "Тонкая паутина — характерный признак возможного паутинного клеща."
-    },
-    {
-      "id": "R7",
-      "diagnosis": "aphid",
-      "weight": 5,
-      "conditions": {
-        "insects": "yes",
-        "web": "no"
-      },
-      "explanation": "Видимые мелкие насекомые без паутины указывают на возможную тлю."
-    },
-    {
-      "id": "R8",
-      "diagnosis": "fungal",
-      "weight": 4,
-      "conditions": {
-        "spots": "dark",
-        "soil": "wet"
-      },
-      "explanation": "Тёмные пятна при переувлажнении могут соответствовать грибковому поражению."
-    }
-  ]
+  }
 }
